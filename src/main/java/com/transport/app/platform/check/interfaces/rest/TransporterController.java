@@ -1,6 +1,7 @@
 package com.transport.app.platform.check.interfaces.rest;
 
 import com.transport.app.platform.check.domain.model.queries.GetTransporterByTransporterIdQuery;
+import com.transport.app.platform.check.domain.model.valueobjects.TransporterId;
 import com.transport.app.platform.check.domain.services.TransporterCommandService;
 import com.transport.app.platform.check.domain.services.TransporterQueryService;
 import com.transport.app.platform.check.interfaces.rest.resources.CreateTransporterResource;
@@ -11,10 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/v1/transporter", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,4 +45,15 @@ public class TransporterController {
 
     }
 
+    @GetMapping("/{transporterId}")
+    public ResponseEntity<TransporterResource> getTransporterByTransporterId(@PathVariable String transporterId) {
+        var transporterId1  = new TransporterId(transporterId);
+        var getStudentByAcmeStudentRecordIdQuery = new GetTransporterByTransporterIdQuery(transporterId1);
+        var transporter = transporterQueryService.handle(getStudentByAcmeStudentRecordIdQuery);
+        if (transporter.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var studentResource = TransporterResourceFromEntityAssembler.toResourceFromEntity(transporter.get());
+        return ResponseEntity.ok(studentResource);
+    }
 }
