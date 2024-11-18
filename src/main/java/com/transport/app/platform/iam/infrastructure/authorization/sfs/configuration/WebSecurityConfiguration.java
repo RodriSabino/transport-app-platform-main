@@ -87,7 +87,9 @@ public class WebSecurityConfiguration {
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
                                 "/swagger-resources/**",
-                                "/webjars/**").permitAll()
+                                "/webjars/**",
+                                "/api/v1/authentication-iot-process/sign-up-iot-device",
+                                "/api/v1/authentication-iot-process/sign-in-iot-device").permitAll().requestMatchers("/api/v1/iot-process/**").authenticated()
                         .anyRequest().authenticated());
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authorizationRequestFilter(), UsernamePasswordAuthenticationFilter.class);

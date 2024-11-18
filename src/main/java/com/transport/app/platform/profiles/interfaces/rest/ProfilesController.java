@@ -6,8 +6,10 @@ import com.transport.app.platform.profiles.domain.services.ProfileCommandService
 import com.transport.app.platform.profiles.domain.services.ProfileQueryService;
 import com.transport.app.platform.profiles.interfaces.rest.resources.CreateProfileResource;
 import com.transport.app.platform.profiles.interfaces.rest.resources.ProfileResource;
+import com.transport.app.platform.profiles.interfaces.rest.resources.UpdateProfileResource;
 import com.transport.app.platform.profiles.interfaces.rest.transform.CreateProfileCommandFromResourceAssembler;
 import com.transport.app.platform.profiles.interfaces.rest.transform.ProfileResourceFromEntityAssembler;
+import com.transport.app.platform.profiles.interfaces.rest.transform.UpdateProfileCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -54,5 +56,15 @@ public class ProfilesController {
                 .map(ProfileResourceFromEntityAssembler::toResourceFromEntity)
                 .toList();
         return ResponseEntity.ok(profileResources);
+    }
+    @PutMapping("/{profileId}")
+    public ResponseEntity<ProfileResource> updateProfile(@PathVariable Long profileId, @RequestBody UpdateProfileResource updateProfileResource) {
+        var updateCourseCommand = UpdateProfileCommandFromResourceAssembler.toCommandFromResource(profileId, updateProfileResource);
+        var updatedProfile = profileCommandService.handle(updateCourseCommand);
+        if (updatedProfile.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        var profileResource = ProfileResourceFromEntityAssembler.toResourceFromEntity(updatedProfile.get());
+        return ResponseEntity.ok(profileResource);
     }
 }
