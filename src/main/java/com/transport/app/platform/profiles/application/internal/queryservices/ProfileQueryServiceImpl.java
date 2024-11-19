@@ -4,6 +4,7 @@ import com.transport.app.platform.profiles.domain.model.aggregates.Profile;
 import com.transport.app.platform.profiles.domain.model.queries.GetAllProfilesQuery;
 import com.transport.app.platform.profiles.domain.model.queries.GetProfileByEmailQuery;
 import com.transport.app.platform.profiles.domain.model.queries.GetProfileByIdQuery;
+import com.transport.app.platform.profiles.domain.model.queries.GetProfileByUserIdQuery;
 import com.transport.app.platform.profiles.domain.services.ProfileQueryService;
 import com.transport.app.platform.profiles.infrastructure.persistence.jpa.repositories.ProfileRepository;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,9 @@ public class ProfileQueryServiceImpl implements ProfileQueryService {
     @Override
     public Optional<Profile> handle(GetProfileByEmailQuery query) {
         return profileRepository.findByEmail(query.email());
+    }
+    @Override
+    public Optional<Profile> handle(GetProfileByUserIdQuery query) {
+        return profileRepository.findByUserId(query.userId());
     }
 }

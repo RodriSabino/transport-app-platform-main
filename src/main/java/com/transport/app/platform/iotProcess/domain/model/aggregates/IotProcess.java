@@ -1,6 +1,7 @@
 package com.transport.app.platform.iotProcess.domain.model.aggregates;
 
 import com.transport.app.platform.iotProcess.domain.model.commands.CreateIotProcessCommand;
+import com.transport.app.platform.iotProcess.domain.model.commands.UpdateIotProcessCommand;
 import com.transport.app.platform.iotProcess.domain.model.valueobjects.IotProcessId;
 import com.transport.app.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.Column;
@@ -8,6 +9,7 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties;
 
 @Entity
 public class IotProcess extends AuditableAbstractAggregateRoot<IotProcess> {
@@ -16,14 +18,7 @@ public class IotProcess extends AuditableAbstractAggregateRoot<IotProcess> {
     @Column(name = "iot_id")
     private final IotProcessId iotProcessId ;
 
-    @NotBlank
-    @Size(max = 50)
-    @Column(unique = true)
-    private String nameIotDevice;
-
-    @NotBlank
-    @Size(max = 120)
-    private String macAddress;
+    private long requestId;
 
     private double temperature;
     private double weight;
@@ -32,17 +27,23 @@ public class IotProcess extends AuditableAbstractAggregateRoot<IotProcess> {
         this.iotProcessId = new IotProcessId();
     }
 
-    public IotProcess(String nameIotDevice, String macAddress, Double temperature, Double weight) {
+    public IotProcess(long requestId, Double temperature, Double weight) {
         this();
-        this.nameIotDevice = nameIotDevice;
-        this.macAddress = macAddress;
+        this.requestId = requestId;
         this.temperature = temperature;
         this.weight = weight;
     }
     public IotProcess(CreateIotProcessCommand command) {
         this.iotProcessId = new IotProcessId();
+        this.requestId = command.requestId();
         this.temperature = command.temperature();
         this.weight = command.weight();
+    }
+    public IotProcess updateIotProcess(Double temperature, Double weight) {
+
+        this.temperature = temperature;
+        this.weight = weight;
+        return this;
     }
 
     public IotProcessId getIotDeviceId() {
@@ -65,11 +66,4 @@ public class IotProcess extends AuditableAbstractAggregateRoot<IotProcess> {
         this.weight = newWeight;
     }
 
-    public String getMacAddress() {
-        return macAddress;
-    }
-
-    public String getNameIotDevice() {
-        return nameIotDevice;
-    }
 }

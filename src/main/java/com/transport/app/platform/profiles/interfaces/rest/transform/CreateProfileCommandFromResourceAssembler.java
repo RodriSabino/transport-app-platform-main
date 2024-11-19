@@ -6,6 +6,7 @@ import com.transport.app.platform.profiles.interfaces.rest.resources.CreateProfi
 public class CreateProfileCommandFromResourceAssembler {
     public static CreateProfileCommand toCommandFromResource(CreateProfileResource resource) {
         return new CreateProfileCommand(
+                resource.id(),
                 resource.firstName(),
                 resource.lastName(),
                 resource.email(),

@@ -15,18 +15,18 @@ public class ExternalIotProcessService {
         this.iotProcessContextFacade = iotProcessContextFacade;
     }
 
-    public Optional<IotProcessId> createIotProcess(Double temperature, Double weight) {
-        var iotProcessId = iotProcessContextFacade.createIotProcess(temperature, weight);
+    public Optional<IotProcessId> createIotProcess(Long requestid, Double temperature, Double weight) {
+        var iotProcessId = iotProcessContextFacade.createIotProcess(requestid, temperature, weight);
         if (iotProcessId == 0L) return Optional.empty();
         return Optional.of(new IotProcessId(iotProcessId));
     }
 
-    public void updateIotProcess(Long iotProcessId, Double updatedTemperature, Double updatedWeight) {
+    public void updateIotProcess(long requestId, Double updatedTemperature, Double updatedWeight) {
         if (updatedTemperature != null) {
-            iotProcessContextFacade.updateTemperature(iotProcessId, updatedTemperature);
+            iotProcessContextFacade.updateTemperature(requestId, updatedTemperature);
         }
         if (updatedWeight != null) {
-            iotProcessContextFacade.updateWeight(iotProcessId, updatedWeight);
+            iotProcessContextFacade.updateWeight(requestId, updatedWeight);
         }
     }
 

@@ -6,6 +6,7 @@ import com.transport.app.platform.check.interfaces.rest.resources.CreateTranspor
 public class CreateTransporterCommandResourceAssembler {
     public static CreateTransporterCommand toCommandFromResource(CreateTransporterResource resource) {
         return new CreateTransporterCommand(
+                resource.id(),
                 resource.firstName(),
                 resource.lastName(),
                 resource.email(),

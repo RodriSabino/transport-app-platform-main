@@ -10,10 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface IotProcessRepository extends JpaRepository<IotProcess, Long> {
-    Optional<Double> findTemperatureById(IotProcessId iotProcessId);
-    Optional<Double> findWeightById(IotProcessId iotProcessId);
-    Optional<IotProcess> findById(IotProcessId iotProcessId);
-    Optional<IotProcess> findByMacAddress(String macAddress);
-    Optional<IotProcess> findByNameIotDevice(String username);
+    Optional<Double> findTemperatureByRequestId(long requestid);
+    Optional<Double> findWeightByRequestId(long requestid);
+    Optional<IotProcess> findByRequestId(long requestid);
+
 
 }

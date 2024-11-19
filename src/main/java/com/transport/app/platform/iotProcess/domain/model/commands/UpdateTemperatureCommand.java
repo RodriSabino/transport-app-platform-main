@@ -1,7 +1,7 @@
 package com.transport.app.platform.iotProcess.domain.model.commands;
 
-import com.transport.app.platform.iotProcess.domain.model.valueobjects.IotProcessId;
+import com.transport.app.platform.iotProcess.domain.model.aggregates.IotProcess;
 
-public record UpdateTemperatureCommand(Long iotProcessId, Double temperature) {
+public record UpdateTemperatureCommand(long requestId, Double temperature) {
 
 }

@@ -17,20 +17,20 @@ public class IotProcessContextFacade {
         this.iotProcessQueryService = iotProcessQueryService;
     }
 
-    public long createIotProcess(Double temperature, Double weight) {
-        var createIotProcessCommand = new CreateIotProcessCommand(temperature, weight);
+    public long createIotProcess(long requestId,  Double temperature, Double weight) {
+        var createIotProcessCommand = new CreateIotProcessCommand(requestId, temperature, weight);
         var iotProcess = iotProcessCommandService.handle(createIotProcessCommand);
         if (iotProcess.isEmpty()) return 0L;
         return iotProcess.get().getId();
     }
 
-    public void updateTemperature(Long iotProcessId, Double temperature) {
-        var updateTemperatureCommand = new UpdateTemperatureCommand(iotProcessId, temperature);
+    public void updateTemperature(long requestId, Double temperature) {
+        var updateTemperatureCommand = new UpdateTemperatureCommand(requestId, temperature);
         iotProcessCommandService.handle(updateTemperatureCommand);
     }
 
-    public void updateWeight(Long iotProcessId, Double weight) {
-        var updateWeightCommand = new UpdateWeightCommand(iotProcessId, weight);
+    public void updateWeight(long requestId, Double weight) {
+        var updateWeightCommand = new UpdateWeightCommand(requestId, weight);
         iotProcessCommandService.handle(updateWeightCommand);
     }
 

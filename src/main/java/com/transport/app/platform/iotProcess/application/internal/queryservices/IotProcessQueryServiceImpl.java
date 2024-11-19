@@ -1,10 +1,7 @@
 package com.transport.app.platform.iotProcess.application.internal.queryservices;
 
 import com.transport.app.platform.iotProcess.domain.model.aggregates.IotProcess;
-import com.transport.app.platform.iotProcess.domain.model.queries.GetAllIotProcessQuery;
-import com.transport.app.platform.iotProcess.domain.model.queries.GetIotProcessByIdQuery;
-import com.transport.app.platform.iotProcess.domain.model.queries.GetTemperatureQuery;
-import com.transport.app.platform.iotProcess.domain.model.queries.GetWeightQuery;
+import com.transport.app.platform.iotProcess.domain.model.queries.*;
 import com.transport.app.platform.iotProcess.domain.services.IotProcessQueryService;
 import com.transport.app.platform.iotProcess.infrastructure.persistence.jpa.repositories.IotProcessRepository;
 import org.springframework.stereotype.Service;
@@ -27,18 +24,18 @@ public class IotProcessQueryServiceImpl implements IotProcessQueryService {
     }
 
     @Override
-    public Optional<IotProcess> handle(GetIotProcessByIdQuery query) {
-        return iotProcessRepository.findById(query.iotProcessId());
+    public Optional<IotProcess> handle(GetIotProcessByRequestIdQuery query) {
+        return iotProcessRepository.findByRequestId(query.requestId());
     }
 
     @Override
-    public Optional<Double> handle(GetTemperatureQuery query) {
-        return iotProcessRepository.findTemperatureById(query.iotProcessId());
+    public Optional<Double> handle(GetTemperatureByRequestIdQuery query) {
+        return iotProcessRepository.findTemperatureByRequestId(query.requestId());
     }
 
     @Override
-    public Optional<Double> handle(GetWeightQuery query) {
-        return iotProcessRepository.findWeightById(query.iotProcessId());
+    public Optional<Double> handle(GetWeightByRequestIdQuery query) {
+        return iotProcessRepository.findWeightByRequestId(query.requestId());
     }
 
 }

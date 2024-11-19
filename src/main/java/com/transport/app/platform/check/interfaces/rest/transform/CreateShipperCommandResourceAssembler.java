@@ -7,6 +7,7 @@ import com.transport.app.platform.check.interfaces.rest.resources.CreateShipperR
 public class CreateShipperCommandResourceAssembler {
     public static CreateShipperCommand toCommandFromResource(CreateShipperResource resource) {
         return new CreateShipperCommand(
+                resource.id(),
                 resource.firstName(),
                 resource.lastName(),
                 resource.email(),

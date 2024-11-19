@@ -6,6 +6,7 @@ import com.transport.app.platform.iotProcess.interfaces.rest.resources.CreateIot
 public class CreateIotProcessCommandFromResourceAssembler {
     public static CreateIotProcessCommand toCommandFromResource(CreateIotProcessResource resource) {
         return new CreateIotProcessCommand(
+                resource.requestId(),
                 resource.temperature(),
                 resource.weight());
     }

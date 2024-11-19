@@ -25,13 +25,13 @@ public class RequestCommandServiceImpl implements RequestCommandService {
 
     @Override
     public Long handle(CreateRequestCommand command) {
-        var iotProcessId = externalIotProcessService.createIotProcess(command.idealTemperature(), command.idealWeight());
         var request = new Request(command);
         try {
             requestRepository.save(request);
         } catch (Exception e) {
             throw new IllegalArgumentException("Error while saving request: " + e.getMessage());
         }
+        externalIotProcessService.createIotProcess(request.getId(),command.idealTemperature(), command.idealWeight());
         return request.getId();
     }
     @Override
@@ -47,7 +47,7 @@ public class RequestCommandServiceImpl implements RequestCommandService {
         if (command.updatedWeight() != null) {
             request.updateWeight(command.updatedWeight());
         }
-        externalIotProcessService.updateIotProcess(command.iotProcessId(), command.updatedTemperature(), command.updatedWeight());
+        externalIotProcessService.updateIotProcess(command.requestId(), command.updatedTemperature(), command.updatedWeight());
 
         try {
             requestRepository.save(request);

@@ -1,7 +1,7 @@
 package com.transport.app.platform.check.domain.model.commands;
 
 public record UpdateRequestCommand(
-        Long iotProcessId, // Añadir IotProcessId
+        long requestId,
         Double updatedTemperature,
         Double updatedWeight
 ) {}

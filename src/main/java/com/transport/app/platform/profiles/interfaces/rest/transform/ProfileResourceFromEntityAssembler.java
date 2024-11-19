@@ -9,6 +9,11 @@ public class ProfileResourceFromEntityAssembler {
                 entity.getId(),
                 entity.getFullName(),
                 entity.getEmailAddress(),
-                entity.getCity());
+                entity.getCity(),
+                entity.getDni(),
+                entity.getPhone(),
+                entity.getBirthday()
+                );
+
     }
 }

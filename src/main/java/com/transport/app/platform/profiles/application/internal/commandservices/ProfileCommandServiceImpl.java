@@ -30,11 +30,11 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
     @Override
     public Optional<Profile> handle(UpdateProfileCommand command) {
         var result = profileRepository.findById(command.id());
-        if (result.isEmpty()) throw new IllegalArgumentException("Course does not exist");
-        var courseToUpdate = result.get();
+        if (result.isEmpty()) throw new IllegalArgumentException("Profile does not exist");
+        var profileToUpdate = result.get();
         try {
-            var updatedCourse = profileRepository.save(courseToUpdate.updateInformation(command.firstName(), command.lastName(), command.email(), command.address(), command.birthday(), command.dni(), command.phone()));
-            return Optional.of(updatedCourse);
+            var updatedProfile = profileRepository.save(profileToUpdate.updateInformation(command.firstName(), command.lastName(), command.email(), command.address(), command.birthday(), command.dni(), command.phone()));
+            return Optional.of(updatedProfile);
         } catch (Exception e) {
             throw new IllegalArgumentException("Error while updating course: " + e.getMessage());
         }

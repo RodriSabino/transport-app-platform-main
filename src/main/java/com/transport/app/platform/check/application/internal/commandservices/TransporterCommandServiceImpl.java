@@ -25,7 +25,7 @@ public class TransporterCommandServiceImpl implements TransporterCommandService 
         var profileId = externalProfileService.fetchProfileIdByEmail(command.email());
         // If profileId is empty, create profile
         if (profileId.isEmpty()) {
-            profileId = externalProfileService.createProfile(command.firstName(), command.lastName(), command.email(), command.address(), command.birthday(), command.dni(), command.phone());
+            profileId = externalProfileService.createProfile(command.id(), command.firstName(), command.lastName(), command.email(), command.address(), command.birthday(), command.dni(), command.phone());
         } else {
             // If profileId is not empty, check if student exists
             transporterRepository.findByProfileId(profileId.get()).ifPresent(transporter -> {

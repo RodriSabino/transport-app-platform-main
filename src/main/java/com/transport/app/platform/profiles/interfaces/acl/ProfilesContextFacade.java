@@ -28,8 +28,8 @@ public class ProfilesContextFacade {
         this.profileQueryService = profileQueryService;
     }
 
-    public Long createProfile(String firstName, String lastName, String email, String address, Date birthday, long dni, String phone) {
-        var createProfileCommand = new CreateProfileCommand(firstName, lastName, email, address, birthday, dni, phone);
+    public Long createProfile(long id, String firstName, String lastName, String email, String address, Date birthday, long dni, String phone) {
+        var createProfileCommand = new CreateProfileCommand(id, firstName, lastName, email, address, birthday, dni, phone);
         var profile = profileCommandService.handle(createProfileCommand);
         if (profile.isEmpty()) return 0L;
         return profile.get().getId();
